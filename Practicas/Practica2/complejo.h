@@ -84,5 +84,5 @@ void convertirPolar(complejo a) {
     float r = sqrt(pow(a.re, 2) + pow(a.im, 2));
     float alpha = atan(a.im / a.re);
 
-    printf("La forma polar es->  z = %f(cos(%f) + isen(%f))\n", r, alpha, alpha);
+    printf("La forma polar es->  z = %f(cos(%.3f) + isen(%.3f))\n", r, alpha, alpha);
 }

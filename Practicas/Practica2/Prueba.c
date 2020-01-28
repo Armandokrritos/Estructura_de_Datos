@@ -33,10 +33,10 @@ int menu() {
 
     switch (opc) {
         case 1:
-            real(pedirDatos());
+            printf("%f", real(pedirDatos()));
             break;
         case 2:
-            imaginario(pedirDatos());
+            printf("%f", imaginario(pedirDatos()));
             break;
         case 3:
             imprimeComplejo(sumar(pedirDatos(), pedirDatos()));
