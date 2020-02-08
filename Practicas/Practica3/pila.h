@@ -4,10 +4,15 @@
 
 typedef char StackEntry;
 
-typedef struct stack{
-    int top;
-    StackEntry entry[MAXSTACK];
-}stack;
+typedef struct stack_nodo{
+    char elemento;
+    stack *next;
+}nodo;
+
+typedef struct stack {
+    nodo *ultimo;
+    int elementos;
+} stack;
 
 int StackEmpty(stack *);
 int StackFull(stack *);

@@ -17,6 +17,25 @@ fraccion restar(fraccion, fraccion);
 fraccion multiplicar(fraccion, fraccion);
 fraccion dividir(fraccion, fraccion);
 fraccion simplificar(fraccion);
+fraccion pedirDatos();
+
+fraccion pedirDatos() {
+    int n, d;
+
+    printf("Ingrasa el numerador: ");
+    scanf("%d", &n);
+
+    do {
+        printf("Ingrasa el denominador: ");
+        scanf("%d", &d);
+
+        if (d == 0) {
+            printf("El denominador no puede ser cero\n");
+        }
+    } while(d == 0);
+
+    return crearFraccion(n, d);
+}
 
 fraccion crearFraccion(int num, int den) {
     fraccion f;

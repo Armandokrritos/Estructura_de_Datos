@@ -31,70 +31,25 @@ int menu() {
 
     switch (opc) {
         case 1:
-            printf("Ingrasa el numerador: ");
-            scanf("%d", &a.numerador);
-            printf("Ingrasa el denominador: ");
-            scanf("%d", &a.denominador);
-            numerador(a);
+            numerador(pedirDatos());
             break;
         case 2:
-            printf("Ingrasa el numerador: ");
-            scanf("%d", &a.numerador);
-            printf("Ingrasa el denominador: ");
-            scanf("%d", &a.denominador);
-            denominador(a);
+            denominador(pedirDatos());
             break;
         case 3:
-            printf("Ingrasa el numerador1: ");
-            scanf("%d", &a.numerador);
-            printf("Ingrasa el denominador1: ");
-            scanf("%d", &a.denominador);
-            printf("Ingrasa el numerador2: ");
-            scanf("%d", &b.numerador);
-            printf("Ingrasa el denominador2: ");
-            scanf("%d", &b.denominador);
-            imprimeFraccion(sumar
-                (a, b));
+            imprimeFraccion(sumar(pedirDatos(), pedirDatos()));
             break;
         case 4:
-            printf("Ingrasa el numerador1: ");
-            scanf("%d", &a.numerador);
-            printf("Ingrasa el denominador1: ");
-            scanf("%d", &a.denominador);
-            printf("Ingrasa el numerador2: ");
-            scanf("%d", &b.numerador);
-            printf("Ingrasa el denominador2: ");
-            scanf("%d", &b.denominador);
-            imprimeFraccion(restar(a, b));
+            imprimeFraccion(restar(pedirDatos(), pedirDatos()));
             break;
         case 5:
-            printf("Ingrasa el numerador1: ");
-            scanf("%d", &a.numerador);
-            printf("Ingrasa el denominador1: ");
-            scanf("%d", &a.denominador);
-            printf("Ingrasa el numerador2: ");
-            scanf("%d", &b.numerador);
-            printf("Ingrasa el denominador2: ");
-            scanf("%d", &b.denominador);
-            imprimeFraccion(multiplicar(a, b));
+            imprimeFraccion(multiplicar(pedirDatos(), pedirDatos()));
             break;
         case 6:
-            printf("Ingrasa el numerador1: ");
-            scanf("%d", &a.numerador);
-            printf("Ingrasa el denominador1: ");
-            scanf("%d", &a.denominador);
-            printf("Ingrasa el numerador2: ");
-            scanf("%d", &b.numerador);
-            printf("Ingrasa el denominador2: ");
-            scanf("%d", &b.denominador);
-            imprimeFraccion(dividir(a, b));
+            imprimeFraccion(dividir(pedirDatos(), pedirDatos()));
             break;
         case 7:
-            printf("Ingrasa el numerador1: ");
-            scanf("%d", &a.numerador);
-            printf("Ingrasa el denominador1: ");
-            scanf("%d", &a.denominador);
-            imprimeFraccion(simplificar(a));
+            imprimeFraccion(simplificar(pedirDatos()));
             break;
         default:
             return 0;
