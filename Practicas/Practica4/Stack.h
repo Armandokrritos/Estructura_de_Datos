@@ -2,27 +2,28 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-typedef char StackEntry;
+typedef int StackEntry;
 
-typedef struct node_t {
+typedef struct node_stack {
     StackEntry entry;
-    struct node *next;
+    struct node_stack *next;
 } Node;
 
-typedef struct stack_t {
+typedef struct stack {
     Node *top;
 } Stack;
 
-void createNode(StackEntry, Node*);
-void createStack(Stack *);
+Node *createNode(StackEntry);
+Stack *createStack();
 bool stackEmpty(Stack *);
 void push(StackEntry, Stack *);
-void pop(StackEntry *, Stack *); 
-void stackTop(StackEntry *,  Stack *);
-void printStack(Stack *s); 
+StackEntry pop(Stack *); 
+StackEntry stackTop(Stack *);
+void printStack(Stack *); 
+void cleanStack(Stack *);
 
-void createNode(StackEntry item, Node *np) {
-    np = (Node *) malloc(sizeof(Node));
+Node *createNode(StackEntry item) {
+    Node *np = (Node *) malloc(sizeof(Node));
 
     if (np == NULL) {
         printf("Error, no se puede asignar memoria\n");
@@ -30,61 +31,76 @@ void createNode(StackEntry item, Node *np) {
         np->entry = item;
         np->next = NULL;
     }
+
+    return np;
 }
 
-void createStack(Stack *s) {
-    s = (Stack *) malloc(sizeof(Stack));
+Stack *createStack() {
+    Stack *s = (Stack *) malloc(sizeof(Stack));
     s->top = NULL;
 }
 
 bool stackEmpty(Stack *s) {
-    return (s->top == NULL);
+    return s->top == NULL;
 }
 
 void push(StackEntry item, Stack *s) {
-    Node *np; 
-    createNode(item, np);
+    Node *np = createNode(item);
 
-    if (np == NULL) {
-        printf("Error, se intonto agarrar un nodo que no existe\n");
+    if (stackEmpty(s)) {
+        np->next = NULL;
     } else {
         np->next = s->top;
-        s->top = np;
     }
+    s->top = np;
 }
 
-void pop(StackEntry *item, Stack *s) {
+StackEntry pop(Stack *s) {
+    StackEntry item;
+
     if(stackEmpty(s)) {
         printf("Error, la pila esta vacia");
     } else {
-        *item = s->top->entry;
+        item = s->top->entry;
         Node *np = s->top;
         s->top = s->top->next;
         free(np);
     }
+
+    return item;
 }
 
-void stackTop(StackEntry *item,  Stack *s) {
+StackEntry stackTop(Stack *s) {
+    StackEntry item;
+
     if (stackEmpty(s)) {
         printf("Error, la pila esta vacia\n");
     } else {
-        *item = s->top->entry;
+        item = s->top->entry;
     }
+
+    return item;
 }
 
 void printStack(Stack *s) {
     if (!stackEmpty(s)) {
         Node *tmp = s->top; 
 
-        while(tmp->next != NULL) {
-            printf("[%c]->", s->top->entry);
+        while (tmp->next != NULL) {
+            printf("[%d]->", tmp->entry);
             tmp = tmp->next;
         }
-        printf("NULL\n");
+        printf("[%d]->\n", tmp->entry);
     } else {
         printf("[ ]\n");
     }
     
+}
+
+void cleanStack(Stack *s) {
+    while (!stackEmpty(s)) {
+        pop(s);
+    }
 }
    
 

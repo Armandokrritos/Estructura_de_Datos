@@ -1,18 +1,17 @@
 #include "Stack.h"
 #include <stdio.h>
 
-#define StackEntry char
+#define type "%d"
 
 bool ejecutar(int, Stack *);
 int menu();
 
 int main() {
     bool flag = true;
-    Stack s;
-    createStack(&s);
+    Stack *s = createStack();
 
     do {
-        flag = ejecutar(menu(), &s);
+        flag = ejecutar(menu(), s);
     } while(flag);
 
 }
@@ -26,51 +25,60 @@ int menu() {
     printf("3. Revisar si esta Vacia\n");
     printf("4. Ver ultimo Elemento\n");
     printf("5. Imprimir Stack\n");
+    printf("6. Vaciar Stack\n");
     printf("0. Salir\n");
-    printf("\nEntrada: ");
+    printf("Entrada: ");
     scanf("%i", &opc);
 
     return opc;
 }
 
 bool ejecutar(int opc, Stack *s) {
-    char c;
+    StackEntry c;
     printf("\n\n");
 
     switch (opc){
         case 0:
             return false; 
         case 1:
-            printf("\tIngrese dato: ");
-            scanf("%c", &c);
+            printf("Ingrese dato: ");
+            scanf("%d", &c);
             push(c, s);
-            printf("Se ingreso el dato correctamente en la pila\n");
+            printf("Se ingreso el dato %d correctamente en la pila\n", stackTop(s));
             break;
 
         case 2:
-            pop(&c, s);
-            printf("Se elimino %c de la pila.", c);
+            if (!stackEmpty(s)) {
+                c = pop(s);
+                printf("Se elimino %d de la pila.", c);
+            } else {
+                printf("La pila esta vacia.");
+            }
             break;
 
         case 3:
             if (stackEmpty(s))
                 printf("La pila esta vacia\n");
             else
-                printf("La pila esta NO esta vacia\n");
+                printf("La pila NO esta vacia");
         
             break;
 
         case 4:
-            c = ' ';
-            stackTop(&c, s);
-
-            if(c != ' ') 
-                printf("Este es el ultimo elemento del stack: %c", c);
-            
+            if (!stackEmpty(s)) {
+                c = stackTop(s);
+                printf("Este es el ultimo elemento del stack: %d", c);
+            } else {
+                printf("La pila esta vacia.");
+            }
             break;
 
         case 5:
             printStack(s);
+            break;
+
+        case 6:
+            cleanStack(s);
             break;
 
         default:
