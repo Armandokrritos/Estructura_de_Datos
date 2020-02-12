@@ -43,16 +43,16 @@ void convertidor(const char *c, char result[]) {
                 strcat(result, aux);
             }
         } else { //Es un operador
-            if (c[i] == 'e') {
-                if (stackTop(s) == '+' || stackTop(s) == '-' || stackTop(s) == '*' || stackTop(s) == '/')  {
+            if (c[i] == '*' || c[i] == '/') {
+                if (stackTop(s) == 'e') {
                     aux[0] = pop(s);
                     strcat(result, aux);
                     push(c[i], s);
                 } else {
                     push(c[i], s);
                 }
-            } else if (c[i] == '*' || c[i] == '/') {
-                if (stackTop(s) == '+' || stackTop(s) == '-') {
+            } else if (c[i] == '+' || c[i] == '-') {
+                if (stackTop(s) == '*' || stackTop(s) == '/') {
                     aux[0] = pop(s);
                     strcat(result, aux);
                     push(c[i], s);
