@@ -38,6 +38,8 @@ Node *createNode(StackEntry item) {
 Stack *createStack() {
     Stack *s = (Stack *) malloc(sizeof(Stack));
     s->top = NULL;
+
+    return s;
 }
 
 bool stackEmpty(Stack *s) {
