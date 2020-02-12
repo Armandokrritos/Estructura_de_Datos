@@ -20,7 +20,7 @@ int main(int argc, char const *argv[]) {
 }
 
 int evaluador(const char *c) {
-    Stack *s = createStack(s);
+    Stack *s = createStack();
     int a, b, i = 0;
     char tmp[1];
 
