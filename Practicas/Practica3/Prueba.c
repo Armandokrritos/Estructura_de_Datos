@@ -1,10 +1,10 @@
-#include <stdio.h>
 #include "pila.h"
+#include<stdio.h>
 
 int main()
 {
     StackEntry c;
-    stack s;
+    Stack s;
     bool flag = 1;
     CreateStack(&s);
     int opc = 0;
