@@ -27,7 +27,7 @@ int evaluador(const char *c) {
     while (c[i] != '\0') {
         if (esNumero(c[i])) {
             tmp[0] = c[i];
-            push((int)atoi(tmp), s);
+            push((int)atoi(tmp), s);((())()))
         } else {
             a = pop(s);
             b = pop(s);
