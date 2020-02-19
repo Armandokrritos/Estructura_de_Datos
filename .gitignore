@@ -1,0 +1,4 @@
+#ejecutable de Windows
+*.exe
+#ejecutable de Linux
+*.out
