@@ -12,7 +12,7 @@ int main(){
 
     char Promedio[MAX];
     char Nombres[MAX];
-    int posicion = 0;
+    int posicion = 0, ayuda = 0;
 
     for (int i = 1, j = 1; i < 60; i++, j++)
     {   
@@ -23,7 +23,11 @@ int main(){
             GetMax(posicion);
         }
     }
-    
+    for (int i = 1; i < 41; i++)
+    {
+        posicion = Ordenar(Nombres, Promedio);
+        GetMax(posicion);
+    }    
     return 0;
 }
 
@@ -38,10 +42,11 @@ void PushString(){
 }
 
 int Ordenar(char Nombres[], char Promedio[]){
-    int max = 0, aux = 0, posicion = 0, i = 1;
+    int posicion = 1, i = 1;
+    float max = 0, aux = 0;
     while(pop(Nombres, Promedio)){
         pushAux(Nombres, Promedio);
-        aux = (int)atoi(Promedio);
+        aux = (float)atof(Promedio);
         if(aux > max){
             max = aux;
             posicion = i;
@@ -55,13 +60,13 @@ int Ordenar(char Nombres[], char Promedio[]){
 void GetMax(int posicion){
     char Promedio[MAX];
     char Nombres[MAX];
-    for (size_t i = 1; i < posicion; i++)
+    for (int i = 1; i <= posicion; i++)
     {
         pop(Nombres, Promedio);
         if(i != posicion)
             pushAux(Nombres, Promedio);
     }
-    printf("Se atendio a: %s\n", Nombres);
+    printf("Se esta atendiendo a: %s\n", Nombres);
     printf("Con promedio de: %s\n", Promedio);
     reset();
 }

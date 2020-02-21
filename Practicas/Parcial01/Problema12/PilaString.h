@@ -4,8 +4,7 @@
 
 #define MAX 255
 
-typedef struct Node
-{
+typedef struct NodeNombre{
     char nombre[MAX];
     char promedio[MAX];
     struct Node *previousNode;
@@ -13,8 +12,7 @@ typedef struct Node
 
 NodeNombre *PointerTopNombre = NULL;
 
-typedef struct Node
-{
+typedef struct NodeAux{
     char nombre[MAX];
     char promedio[MAX];
     struct Node *previousNode;
@@ -42,7 +40,7 @@ void printStack(void)
     {
         printf("%s\n", tmp->nombre);
         printf("%s\n", tmp->promedio);
-        tmp = tmp->previousNode;
+        tmp = (NodeNombre *)tmp->previousNode;
     };
     return;
 }
@@ -62,7 +60,7 @@ int pop(char nombre[], char promedio[])
         return 0;
     strcpy(nombre, PointerTopNombre->nombre);
     strcpy(promedio, PointerTopNombre->promedio);
-    NodeNombre *PreviousNodePointer = PointerTopNombre->previousNode;
+    NodeNombre *PreviousNodePointer = (NodeNombre *)PointerTopNombre->previousNode;
     free(PointerTopNombre);
     PointerTopNombre = PreviousNodePointer;
     return 1;
@@ -88,7 +86,7 @@ void printStackAux(void)
     {
         printf("%s\n", tmp->nombre);
         printf("%s\n", tmp->promedio);
-        tmp = tmp->previousNode;
+        tmp = (NodeAux *)tmp->previousNode;
     };
     return;
 }
@@ -108,7 +106,7 @@ int popAux(char nombre[], char promedio[])
         return 0;
     strcpy(nombre, PointerTopAux->nombre);
     strcpy(promedio, PointerTopAux->promedio);
-    NodeAux *PreviousNodePointer = PointerTopAux->previousNode;
+    NodeAux *PreviousNodePointer = (NodeAux *)PointerTopAux->previousNode;
     free(PointerTopAux);
     PointerTopAux = PreviousNodePointer;
     return 1;
