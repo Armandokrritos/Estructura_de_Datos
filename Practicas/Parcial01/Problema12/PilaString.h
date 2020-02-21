@@ -9,18 +9,35 @@ typedef struct Node
     char nombre[MAX];
     char promedio[MAX];
     struct Node *previousNode;
-} Node;
+} NodeNombre;
 
-Node *PointerTop = NULL;
+NodeNombre *PointerTopNombre = NULL;
 
+typedef struct Node
+{
+    char nombre[MAX];
+    char promedio[MAX];
+    struct Node *previousNode;
+} NodeAux;
+
+NodeAux *PointerTopAux = NULL;
+
+//Original
 int push(char[], char[]);
 int pop(char[], char[]);
 int top(char[], char[]);
 void printStack(void);
+//Auxiliar
+int pushAux(char[], char[]);
+int popAux(char[], char[]);
+int topAux(char[], char[]);
+void printStackAux(void);
+//Reset
+int reset();
 
-void PrintStack(void)
+void printStack(void)
 {
-    Node *tmp = PointerTop;
+    NodeNombre *tmp = PointerTopNombre;
     while (tmp != NULL)
     {
         printf("%s\n", tmp->nombre);
@@ -32,33 +49,92 @@ void PrintStack(void)
 
 int top(char nombre[], char promedio[])
 {
-    if (PointerTop == NULL)
+    if (PointerTopNombre == NULL)
         return 0;
-    strcpy(nombre, PointerTop->nombre);
-    strcpy(nombre, PointerTop->promedio);
+    strcpy(nombre, PointerTopNombre->nombre);
+    strcpy(nombre, PointerTopNombre->promedio);
     return 1;
 }
 
 int pop(char nombre[], char promedio[])
 {
-    if (PointerTop == NULL)
+    if (PointerTopNombre == NULL)
         return 0;
-    strcpy(nombre, PointerTop->nombre);
-    strcpy(promedio, PointerTop->promedio);
-    Node *PreviousNodePointer = PointerTop->previousNode;
-    free(PointerTop);
-    PointerTop = PreviousNodePointer;
+    strcpy(nombre, PointerTopNombre->nombre);
+    strcpy(promedio, PointerTopNombre->promedio);
+    NodeNombre *PreviousNodePointer = PointerTopNombre->previousNode;
+    free(PointerTopNombre);
+    PointerTopNombre = PreviousNodePointer;
     return 1;
 }
 
 int push(char nombre[], char promedio[])
 {
-    Node *NewNodePointer = (Node*)malloc (sizeof(Node));
+    NodeNombre *NewNodePointer = (NodeNombre*)malloc (sizeof(NodeNombre));
     if (!NewNodePointer)
         return 0;
     strcpy(NewNodePointer->nombre, nombre);
     strcpy(NewNodePointer->promedio, promedio);
-    NewNodePointer->previousNode = PointerTop;
-    PointerTop = NewNodePointer;
+    NewNodePointer->previousNode = PointerTopNombre;
+    PointerTopNombre = NewNodePointer;
     return 1;
+}
+
+//Auxiliar
+void printStackAux(void)
+{
+    NodeAux *tmp = PointerTopAux;
+    while (tmp != NULL)
+    {
+        printf("%s\n", tmp->nombre);
+        printf("%s\n", tmp->promedio);
+        tmp = tmp->previousNode;
+    };
+    return;
+}
+
+int topAux(char nombre[], char promedio[])
+{
+    if (PointerTopAux == NULL)
+        return 0;
+    strcpy(nombre, PointerTopAux->nombre);
+    strcpy(nombre, PointerTopAux->promedio);
+    return 1;
+}
+
+int popAux(char nombre[], char promedio[])
+{
+    if (PointerTopNombre == NULL)
+        return 0;
+    strcpy(nombre, PointerTopAux->nombre);
+    strcpy(promedio, PointerTopAux->promedio);
+    NodeAux *PreviousNodePointer = PointerTopAux->previousNode;
+    free(PointerTopAux);
+    PointerTopAux = PreviousNodePointer;
+    return 1;
+}
+
+int pushAux(char nombre[], char promedio[])
+{
+    NodeAux *NewNodePointer = (NodeAux *)malloc(sizeof(NodeAux));
+    if (!NewNodePointer)
+        return 0;
+    strcpy(NewNodePointer->nombre, nombre);
+    strcpy(NewNodePointer->promedio, promedio);
+    NewNodePointer->previousNode = PointerTopAux;
+    PointerTopAux = NewNodePointer;
+    return 1;
+}
+
+int reset(){
+    char nombre[MAX];
+    char promedio[MAX];
+    while (PointerTopAux != NULL)
+    {
+        popAux(nombre, promedio);
+        push(nombre, promedio);
+        nombre[MAX];
+        promedio[MAX];
+    }
+    
 }
