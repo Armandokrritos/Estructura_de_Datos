@@ -79,7 +79,7 @@ int count(){
 
 void append(int num){
     struct node *temp, *right;
-    temp = (struct node*s) malloc(sizeof(struct node));
+    temp = (struct node*) malloc(sizeof(struct node));
     temp->data = num;
     right = head;
     while(right->next != NULL)
