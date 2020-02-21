@@ -17,10 +17,9 @@ void insert(int num){
         add(num);
     }else{
         while(temp != NULL){
-            if(temp->data<num){
+            if(temp->data<num)
                 c++;
-                temp = temp->next;
-            }
+            temp = temp->next;
         }
         if (c == 0)
         {
