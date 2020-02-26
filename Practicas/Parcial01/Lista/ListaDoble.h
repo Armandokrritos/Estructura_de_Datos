@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 typedef struct node
 {
@@ -12,6 +13,8 @@ typedef struct node
 void insert(Node*, int);
 void del(Node *, int);
 Node *find(Node *, int);
+void display(Node*);
+void displayBackwards(Node *);
 
 void insert(Node *current, int data)
 {
@@ -61,4 +64,25 @@ Node *find(Node *current, int data)
         current = current->next;
     }
     return NULL;
+}
+
+void display(Node*current){
+    current = current->next;
+    while(current != NULL){
+        printf("%d\n", current->data);
+        current = current->next;
+    }
+}
+
+void displayBackwards(Node *current){
+    Node * head = current;
+    current = current ->next;
+    while (current != NULL)
+    {
+        current = current->next;
+    }
+    while(current != head){
+        printf("%d\n", current->data);
+        current = current->prev;
+    }
 }

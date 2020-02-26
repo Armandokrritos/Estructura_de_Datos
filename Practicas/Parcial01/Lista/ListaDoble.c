@@ -12,6 +12,7 @@ Node * head;
 void insert(Node *, int);
 void del(Node *, int);
 Node *find(Node *, int);
+void display(Node *);
 
 int main(){
     //Nodo Centinela
