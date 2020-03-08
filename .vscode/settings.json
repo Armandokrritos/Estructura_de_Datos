@@ -3,6 +3,7 @@
         "stdio.h": "c",
         "limits": "cpp",
         "*.tcc": "cpp",
-        "type_traits": "cpp"
+        "type_traits": "cpp",
+        "cstdio": "c"
     }
 }

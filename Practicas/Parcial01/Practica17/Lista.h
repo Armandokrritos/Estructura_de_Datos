@@ -2,34 +2,29 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
-typedef struct tm
-{
-    int tm_sec;  /* seconds after the minute [0-60] */
-    int tm_min;  /* minutes after the hour [0-59] */
-    int tm_hour; /* hours since midnight [0-23] */
-} tiempo;
+#define MAX 255
 
-typedef struct node
-{
+typedef struct node{
     int id;
-    char destino[255];
-    char compañia[255];
+    char destino[MAX];
+    char compania[MAX];
     int pasajeros;
-    tiempo salida;
+    int tiempo[3];
     struct node *next;
     struct node *prev;
 } Node;
 
-void insert(Node *, char destino[], char compañia[], int pasajeros, tiempo salida);
+void insert(Node *, char [], char [], int , int[]);
 void del(Node *, int);
 Node *findById(Node *, int);
-void findByHour(Node *, int, int[]);
+void findByHour(Node *, struct tm *, int[]);
 void displayALL(Node *);
 void displayALLBackwards(Node *);
 void display(Node *);
 
-void insert(Node *current, char destino[], char compañia[], int pasajeros, tiempo salida)
+void insert(Node *current, char destino[], char compania[], int pasajeros, int salida[])
 {
     int ids = 0;
     while (current->next != NULL)
@@ -37,24 +32,27 @@ void insert(Node *current, char destino[], char compañia[], int pasajeros, tiem
         current = current->next;
         ids = current->id;
     }
+    ids++;
     current->next = (Node *)malloc(sizeof(Node));
     (current->next)->prev = current;
     current = current->next;
     current->pasajeros = pasajeros;
-    current->salida = salida;
-    strcpy(current->compañia, compañia);
+    (current->tiempo)[0] = salida[0];
+    (current->tiempo)[1] = salida[1];
+    (current->tiempo)[2] = salida[2];
+    strcpy(current->compania, compania);
     strcpy(current->destino, destino);
-    current->id = ids++;
+    current->id = ids;
     current->next = NULL;
 }
 
 void del(Node *current, int ids)
 {
-    while (current->next != NULL && (current->next)->id != ids)
+    while (current->next != NULL && current->next->id != ids)
     {
         current = current->next;
     }
-    if (current->next == NULL)
+    if (current->next == NULL && current->id != ids)
     {
         printf("El elemento %d no esta en la lista \n", ids);
         return;
@@ -70,51 +68,71 @@ void del(Node *current, int ids)
         (current->next)->prev = tmp->prev;
     }
     free(tmp);
-    return;
 }
 
-Node *findById(Node *current, int ids)
+Node *findById(Node *tmp, int ids)
 {
+    Node *current = tmp;
     current = current->next;
     while (current != NULL)
     {
-        if (current->id == ids)
+        if (current->id == ids){
             return current;
-        current = current->next;
+        }else{
+            current = current->next;
+        }
     }
     return NULL;
 }
 
-void findByHour(Node *current, tiempo salidas, int ids[])
+void findByHour(Node *tmp, struct tm *salida, int ids[])
 {
-    int aux=0;
+    Node *current = tmp;
+    int aux=1;
     current = current->next;
     while (current != NULL)
     {
-        if (current->salida.tm_hour == salidas.tm_hour && current->salida.tm_min == salidas.tm_min){
-            ids[aux] = current->id;
-            aux++;
+        if ((current->tiempo[0]) <= (salida->tm_hour))
+        {
+            if ((current->tiempo[0]) == (salida->tm_hour)){
+                if ((current->tiempo[1]) <= (salida->tm_min))
+                {
+                    ids[aux] = current->id;
+                    ids[0] += 1;
+                    aux++;
+                }
+            }else{
+                ids[aux] = current->id;
+                ids[0] += 1;
+                aux++;
+            }
         }
         current = current->next;
     }
 }
 
-void displayALL(Node *current)
+void displayALL(Node *tmp)
 {
+    Node *current = tmp;
     current = current->next;
+    if(current == NULL){
+        printf("NO HAY VUELOS REGISTRADOS");
+        return;
+    }
     while (current != NULL)
     {
         printf("ID: %d\n", current->id);
-        printf("Compañia: %s\n", current->compañia);
         printf("Destino: %s\n", current->destino);
+        printf("Empresa: %s\n", current->compania);
         printf("Numero de Pasajeros: %d\n", current->pasajeros);
-        printf("Hora de salida: %d:%d:%d\n", current->salida.tm_hour, current->salida.tm_min, current->salida.tm_sec);
+        printf("Hora de salida: %d:%d:%d\n", (current->tiempo[0]), (current->tiempo[1]), (current->tiempo[2]));
         current = current->next;
     }
 }
 
-void displayALLBackwards(Node *current)
+void displayALLBackwards(Node *tmp)
 {
+    Node *current = tmp;
     Node *head = current;
     current = current->next;
     while (current != NULL)
@@ -124,20 +142,20 @@ void displayALLBackwards(Node *current)
     while (current != head)
     {
         printf("ID: %d\n", current->id);
-        printf("Compañia: %s\n", current->compañia);
         printf("Destino: %s\n", current->destino);
+        printf("Empresa: %s\n", current->compania);
         printf("Numero de Pasajeros: %d\n", current->pasajeros);
-        printf("Hora de salida: %d:%d:%d\n", current->salida.tm_hour, current->salida.tm_min, current->salida.tm_sec);
+        printf("Hora de salida: %d:%d:%d\n", (current->tiempo[0]), (current->tiempo[1]), (current->tiempo[2]));
         current = current->prev;
     }
 }
 
-void display(Node *current)
+void display(Node *tmp)
 {
-    current = current->next;
+    Node * current = tmp;
     printf("ID: %d\n", current->id);
-    printf("Compañia: %s\n", current->compañia);
     printf("Destino: %s\n", current->destino);
+    printf("Empresa: %s\n", current->compania);
     printf("Numero de Pasajeros: %d\n", current->pasajeros);
-    printf("Hora de salida: %d:%d:%d\n", current->salida.tm_hour, current->salida.tm_min, current->salida.tm_sec);
+    printf("Hora de salida: %d:%d:%d\n", (current->tiempo[0]), (current->tiempo[1]), (current->tiempo[2]));
 }
