@@ -116,7 +116,7 @@ void displayALL(Node *tmp)
     Node *current = tmp;
     current = current->next;
     if(current == NULL){
-        printf("NO HAY VUELOS REGISTRADOS");
+        printf("NO HAY VUELOS REGISTRADOS\n");
         return;
     }
     while (current != NULL)
