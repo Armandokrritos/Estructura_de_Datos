@@ -1,37 +1,73 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct nodo
+typedef struct snodo
 {
-	int info;
-	struct nodo *sig;
-} nodoL;
+	int id;
+	struct snodo *sig;
+} tnodo;			   
 
-typedef nodoL* lista;
+typedef tnodo *tpuntero;
 
-void insFront(lista *L, int n);
-int mostrar(nodoL* L);
-void borrar(lista *L, int n);
+void insertarEnLista(tpuntero *cabeza, int e);
+void imprimirLista(tpuntero cabeza);
+void borrarLista(tpuntero *cabeza);
 
-void insFront (lista *L, int n){
-	lista aux = malloc(sizeof(nodoL)); 
-	aux -> info = n; 
-	aux -> sig = *L; 
-	*L=aux; 
-}
+int main()
+{
+	int e;
+	tpuntero cabeza; 
 
-int mostrar(nodoL* L){
-	int i=0;
-	if (L!=NULL){
-		i=1;
-		printf(" |%d|->",L->info);
-		mostrar(L->sig);
+	printf("Ingrese elementos, -1 para terminar: ");
+	scanf("%d", &e);
+
+	while (e != -1)
+	{
+		insertarEnLista(&cabeza, e);
+		printf("Ingresado correctamente");
+		printf("\n");
+		printf("Ingrese elementos, -1 para terminar: ");
+		scanf("%d", &e);
 	}
-	return i;
+
+	printf("\nSe imprime la lista cargada: ");
+	imprimirLista(cabeza);
+
+	printf("\nSe borra la lista cargada\n");
+	borrarLista(&cabeza);
+
+	printf("\n");
+	system("PAUSE");
+
+	return 0;
 }
 
-void borrar(lista *L, int n){
-	lista aux = *L;
-	(*L) = (*L) -> sig;
-	free(aux);
+void insertarEnLista(tpuntero *cabeza, int e)
+{
+	tpuntero nuevo;				  
+	nuevo = malloc(sizeof(tnodo)); 
+	nuevo->valor = e;			   
+	nuevo->sig = *cabeza;		  
+	*cabeza = nuevo;			  
+}
+
+void imprimirLista(tpuntero cabeza)
+{
+	while (cabeza != NULL)
+	{								 
+		printf("%4d", cabeza->valor); 
+		cabeza = cabeza->sig;		
+	}
+}
+
+void borrarLista(tpuntero *cabeza)
+{
+	tpuntero actual;
+
+	while (*cabeza != NULL)
+	{							  
+		actual = *cabeza;		 
+		*cabeza = (*cabeza)->sig; 
+		free(actual);
+	}
 }

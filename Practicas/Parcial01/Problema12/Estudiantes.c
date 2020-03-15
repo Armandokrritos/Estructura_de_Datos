@@ -13,8 +13,11 @@ int main(){
     char Promedio[MAX];
     char Nombres[MAX];
     int posicion = 0, ayuda = 0;
-
-    for (int i = 1, j = 1; i < 60; i++, j++)
+    for(int i = 1; i<=3; i++){
+        PushString();
+    }
+    GetMax(3);
+    for (int i = 1, j = 1; i < 57; i++, j++)
     {   
         PushString();
         if(j==3){
@@ -23,7 +26,7 @@ int main(){
             GetMax(posicion);
         }
     }
-    for (int i = 1; i < 41; i++)
+    for (int i = 1; i < 40; i++)
     {
         posicion = Ordenar(Nombres, Promedio);
         GetMax(posicion);
@@ -38,6 +41,7 @@ void PushString(){
     scanf("%s", Nombres);
     scanf("%s", Promedio);
     if(!push(Nombres, Promedio))
+
         printf("Error");  
 }
 
