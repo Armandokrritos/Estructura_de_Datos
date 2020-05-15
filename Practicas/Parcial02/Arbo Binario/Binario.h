@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<stdbool.h>
 
 typedef struct nodo{
     int nivel; 
@@ -10,22 +11,24 @@ typedef struct nodo{
  
 Nodo * raiz = NULL;
 
-void Insertar(int);
-void Eliminar(int);
+bool Insertar(int);
+bool Eliminar(int);
+bool Find(int);
+bool Modify(int, int);
 void Padre(int);
 void Hermano(int);
 void Hijo_Izq(int);
 void Hijo_Der(int);
 
-void Insertar(int dato){
+bool Insertar(int dato){
     Nodo* nuevo;
-    int nivel = 0;
+    int nivel = 1;
     nuevo = (Nodo*)malloc(sizeof(Nodo));
     nuevo->info = dato;
     nuevo->der = NULL; 
     nuevo->izq = NULL;
     if(raiz == NULL){
-        nuevo->nivel = 1;
+        nuevo->nivel = nivel;
         raiz = nuevo;
     }else{
         Nodo * anterior, * head;
@@ -48,9 +51,47 @@ void Insertar(int dato){
             anterior->der = nuevo;
         }
     }
+    return true;
 }
 
-void Eliminar(int dato){
+bool Modify(int old, int new){
+    if(Eliminar(old)){
+        Insertar(new);
+        return true;
+    }else{
+        printf("No se pudo modificar el elemento\n");
+        return false;
+    }
+}
+
+bool Find(int dato){
+    Nodo * anterior, * head;
+    anterior = NULL;
+    head = raiz;
+    int i = 0;
+    while (head != NULL)
+    {
+        if(head->info == dato){
+            i = head->nivel;
+            break;
+        }
+        anterior = head;
+        if(dato < head->info){
+            head = head->izq;
+        }else{
+            head = head->der;
+        }
+    }
+    if(i != 0){
+        printf("Se encontro el elemento\n");
+        return true;
+    }else{
+        printf("No se encontro el elemento\n");
+        return false;
+    }
+}
+
+bool Eliminar(int dato){
     Nodo * anterior, * head;
     anterior = NULL;
     head = raiz;
@@ -71,6 +112,7 @@ void Eliminar(int dato){
     if(i != 0){
         if(i == 1){
             printf("No se puede eliminar por que el elemento es la raiz\n");
+            return false;
         }else{
             if(dato < anterior->info){
                 anterior = head->izq;
@@ -78,9 +120,11 @@ void Eliminar(int dato){
                 anterior = head->der;
             }
             free(head);
+            return true;
         }
     }else{
         printf("No se encontro el elemento\n");
+        return false;
     }
 }
 
@@ -132,7 +176,7 @@ void Hermano(int dato){
         }
     }
     if (i == 0){
-        printf("No se encuentra el elemento\m");
+        printf("No se encuentra el elemento\n");
     }else{
         if(anterior != NULL){
             if(dato < anterior->info){
